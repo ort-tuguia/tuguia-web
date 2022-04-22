@@ -4,6 +4,7 @@ import { useRef } from "react";
 function EventsAgregarServicio(props) {
   const RadioInputRef = useRef();
   const CategoriaInputRef = useRef();
+  const unavariable = 10;
 
   function submitHandler(event) {
     event.preventDefault();
