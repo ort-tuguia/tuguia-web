@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 
 import classes from './auth-form.module.css'; 
 
-async function createUser(email, password) {
+/* async function createUser(username, password) {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, password }),
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  }); 
 
  const data = await response.json();
 
@@ -20,11 +20,11 @@ async function createUser(email, password) {
   }
 
   return data;
-} 
+} */
 
 function AuthForm() {
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
+  const usernameInputRef = useRef();
+  const enteredPasswordRef = useRef();
 
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
@@ -36,25 +36,25 @@ function AuthForm() {
   async function submitHandler(event) {
     event.preventDefault();
 
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
+    const enteredUsername = usernameInputRef.current.value;
+    const enteredPassword = enteredPasswordRef.current.value;
 
     // optional: Add validation
 
     if (isLogin) {
       const result = await signIn('credentials', {
         redirect: false,
-        email: enteredEmail,
+        username: enteredUsername,
         password: enteredPassword,
       });
 
       if (!result.error) {
         // set some auth state (in context or redux)
-        router.replace('/profile');
+        router.replace('/Guia/HomeGuia/1');
       }
     } else {
       try {
-        const result = await createUser(enteredEmail, enteredPassword);
+        const result = await createUser(enteredUsername, enteredPassword);
         console.log(result);
       } catch (error) {
         console.log(error);
@@ -67,8 +67,8 @@ function AuthForm() {
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor='email'>Your Email</label>
-          <input type='email' id='email' required ref={emailInputRef} />
+          <label htmlFor='username'>Your username</label>
+          <input type='username' id='username' required ref={usernameInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor='password'>Your Password</label>
@@ -76,7 +76,7 @@ function AuthForm() {
             type='password'
             id='password'
             required
-            ref={passwordInputRef}
+            ref={usernameInputRef}
           />
         </div>
         <div className={classes.actions}>
