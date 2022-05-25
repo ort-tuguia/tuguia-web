@@ -3,11 +3,11 @@ import {useEffect, useState} from "react";
 
 
 function Actividades() {
+    const [activities,setActivities]= useState("");
 
     useEffect(  () => {
         async function getActivities(){
-            let res = await apiServices.getActivities();
-            console.log("Aca hay algo: " + res.data[1])
+            await apiServices.getActivities().then(response => console.log(response.data))
         }
         getActivities();
     },[])
