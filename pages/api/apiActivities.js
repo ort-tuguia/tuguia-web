@@ -1,24 +1,18 @@
-import axios from 'axios'
-const apiConnection = axios.create({
-    baseURL : 'https://ort-tuguia-api.herokuapp.com/api',
-    headers:{
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-    }
-})
+import apiConnection from "./apiConnection";
+
 
 export default {
     async getActivityById(id){
-        return await apiConnection.get('/activities/'${id})
+        return await apiConnection.get('/activities/'+id)
     },
     async updateActivity(id,name,description,locationLatitude,locationLongitude,price,guideUsername){
-        return await apiConnection.put('/activities/'${id},{"name":name,"description":description,
+        return await apiConnection.put('/activities/'+id,{"name":name,"description":description,
             "locationLatitude":locationLatitude,"locationLongitude":locationLongitude,"price":price,
             "guideUsername":guideUsername
         })
     },
     async deleteActivity(id){
-        return await apiConnection.delete('/activities/'${id})
+        return await apiConnection.delete('/activities/'+id)
     },
     async getActivities(){
         return await apiConnection.get('/activities')
