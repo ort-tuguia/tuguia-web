@@ -1,4 +1,4 @@
-import apiServices from "../../api/apiServices";
+import apiServices from "../../api/apiActivities";
 import {useEffect, useState} from "react";
 
 
@@ -7,7 +7,11 @@ function Actividades() {
 
     useEffect(  () => {
         async function getActivities(){
-            await apiServices.getActivities().then(response => console.log(response.data))
+            await apiServices.getActivities().then(response =>
+                setActivities(response.data),
+                    //console.log(response.data)
+
+            )
         }
         getActivities();
     },[])
@@ -15,7 +19,7 @@ function Actividades() {
 
     return (
         <div>
-            <p>Hola</p>
+            <p></p>
         </div>
     )
 }
