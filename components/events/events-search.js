@@ -7,12 +7,13 @@ function EventsSearch(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    const selectedYear = RadioInputRef.current.value;
-    const selectedMonth = CategoriaInputRef.current.value;
+    const selectedKms = RadioInputRef.current.value;
+    const selectedCategories = CategoriaInputRef.current.value;
 
     console.log(RadioInputRef.current.value)
+    console.log(CategoriaInputRef.current.value)
 
-    props.onSearch(selectedYear, selectedMonth)
+    props.onSearch(selectedKms, selectedCategories)
 
 
   }
@@ -29,7 +30,7 @@ function EventsSearch(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="Categoria">Categoria</label>
-          <select id="Categoria" ref={CategoriaInputRef}>
+          <select multiple id="Categoria" ref={CategoriaInputRef}  >
             <option value="1">Naturaleza</option>
             <option value="2">Museos</option>
             <option value="3">Trekking</option>
@@ -47,6 +48,7 @@ function EventsSearch(props) {
         <Button>Enviar</Button>
       </div>
     </form>
+    
   );
 }
 
