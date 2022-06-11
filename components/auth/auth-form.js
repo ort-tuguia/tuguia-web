@@ -64,14 +64,14 @@ function AuthForm() {
 
   return (
     <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+      {/* <h1>{isLogin ? 'Login' : 'Sign Up'}</h1> */}
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor='username'>Your username</label>
+          <label htmlFor='username'>Username</label>
           <input type='username' id='username' required ref={usernameInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor='password'>Your Password</label>
+          <label htmlFor='password'>Password</label>
           <input
             type='password'
             id='password'
@@ -80,14 +80,7 @@ function AuthForm() {
           />
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
-          <button
-            type='button'
-            className={classes.toggle}
-            onClick={switchAuthModeHandler}
-          >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
-          </button>
+          <button>Ingresar</button>
         </div>
       </form>
     </section>

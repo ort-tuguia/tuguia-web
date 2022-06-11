@@ -14,7 +14,7 @@ export default {
     async deleteActivity(id){
         return await apiConnection.delete('/activities/'+id)
     },
-    async getActivities(){
+    async getActivities(token){
         return await apiConnection.get('/activities')
     },
     async createActivity(name,description,locationLatitude,locationLongitude,price,guideUsername){

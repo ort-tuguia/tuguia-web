@@ -1,10 +1,11 @@
 import { Fragment } from "react";
 import MainHeader from "./main-header";
+import AdminHeader from "./admin-header";
 
 function Layout(props) {
   return (
     <Fragment>
-      <MainHeader/>
+      <AdminHeader/>
       <main>{props.children}</main>
     </Fragment>
   );
