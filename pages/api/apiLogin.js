@@ -1,7 +1,7 @@
 import apiConnection from "./apiConnection";
 
 export default {
-    async getLogin(User) {
-        return await apiConnection.get('/user/login', {"userName": User.userName, "password": User.password})
+    async userLogin(username, password) {
+        return await apiConnection.post('/user/login', {"username": username, "password": password})
     }
 }
