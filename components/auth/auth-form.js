@@ -1,26 +1,8 @@
 import { useState, useRef } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-import classes from './auth-form.module.css'; 
-
-/* async function createUser(username, password) {
-  const response = await fetch('/api/auth/signup', {
-    method: 'POST',
-    body: JSON.stringify({ username, password }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }); 
-
- const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Something went wrong!');
-  }
-
-  return data;
-} */
+import classes from './auth-form.module.css';
+import apiLogin from '../../pages/api/apiLogin';
 
 function AuthForm() {
   const usernameInputRef = useRef();
@@ -42,16 +24,14 @@ function AuthForm() {
     // optional: Add validation
 
     if (isLogin) {
-      const result = await signIn('credentials', {
-        redirect: false,
-        username: enteredUsername,
-        password: enteredPassword,
-      });
-
-      if (!result.error) {
-        // set some auth state (in context or redux)
-        router.replace('/Guia/HomeGuia/1');
-      }
+      apiLogin.userLogin(enteredUsername, enteredPassword)
+        .then(result => {
+          let token = result.headers['authorization'] // TODO: Save in gloabl variable
+          router.replace(`/Guia/HomeGuia/${result.data.username}`)
+        })
+        .catch(err => {
+          console.error(err)
+        })
     } else {
       try {
         const result = await createUser(enteredUsername, enteredPassword);
@@ -76,7 +56,7 @@ function AuthForm() {
             type='password'
             id='password'
             required
-            ref={usernameInputRef}
+            ref={enteredPasswordRef}
           />
         </div>
         <div className={classes.actions}>
