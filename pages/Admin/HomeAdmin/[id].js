@@ -5,18 +5,21 @@ import apiUsuarios from "../../api/apiUsuarios";
 import bearer from "../../../components/context/contextLogin";
 
 function HomeAdminId() {
-    const[token,setToken] = useState()
     const[users,setUsers]= useState()
     useEffect(()=>{
          bearer = localStorage.getItem("token")
         //setToken(localStorage.getItem("bearer"))
         console.log("Token en HomeAdmin " + bearer)
         apiUsuarios.getUsuarios(bearer).then(result=>{
+            console.log( "Result "+ result)
+                console.log("Result Data " + result.data)
             let response = result.data
             setUsers(response)
-            console.log (users)
+                console.log("Token en HomeAdmin dentro de response " + bearer)
+            console.log ("Users " + users)
         }
         ).catch(err =>{
+            console.log("Token en HomeAdmin dentro de response error " + bearer)
             console.error(err)
         })
 
@@ -24,13 +27,13 @@ function HomeAdminId() {
 
 
     const router = useRouter();
-    const guiaId = router.query.id
+    // const guiaId = router.query.id
 
 
-    function findEventsHandler(year, month) {
-        const fullPath = `events/${year}/${month}`
-        router.push(fullPath)
-    }
+    // function findEventsHandler(year, month) {
+    //     const fullPath = `events/${year}/${month}`
+    //     router.push(fullPath)
+    // }
 
 
     return (
