@@ -28,6 +28,7 @@ function AuthForm() {
       apiLogin.userLogin(enteredUsername, enteredPassword)
         .then(result => {
           let token = result.headers['authorization'] // TODO: Save in gloabl variable
+          console.log("Token en login " + token)
           localStorage.setItem("token",token);
           router.replace(`/Admin/HomeAdmin/${result.data.username}`)
         })

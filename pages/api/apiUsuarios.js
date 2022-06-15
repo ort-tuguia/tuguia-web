@@ -1,7 +1,14 @@
 import apiConnection from "./apiConnection";
 
 export default {
-    async getUsuarios() {
-        return await apiConnection.get('/users')
+    async getUsuarios(token) {
+        console.log("Token en apiUsuarios " + token)
+         let response = await apiConnection.get('/users',{
+            headers:{
+                'authorization': token
+            }
+        })
+
+        return response
     }
 }
