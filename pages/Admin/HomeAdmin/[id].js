@@ -2,15 +2,16 @@ import { useRouter } from 'next/router'
 import LayoutAdmin from "../../../components/layout/layout-admin";
 import {useEffect, useState} from "react";
 import apiUsuarios from "../../api/apiUsuarios";
-
+import bearer from "../../../components/context/contextLogin";
 
 function HomeAdminId() {
     const[token,setToken] = useState()
     const[users,setUsers]= useState()
     useEffect(()=>{
-        setToken(localStorage.getItem("token"))
-        console.log("Token en HomeAdmin " + token)
-        apiUsuarios.getUsuarios(token).then(result=>{
+         bearer = localStorage.getItem("token")
+        //setToken(localStorage.getItem("bearer"))
+        console.log("Token en HomeAdmin " + bearer)
+        apiUsuarios.getUsuarios(bearer).then(result=>{
             let response = result.data
             setUsers(response)
             console.log (users)

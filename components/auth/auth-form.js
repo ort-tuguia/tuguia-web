@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-
+import bearer from "../context/contextLogin";
 import classes from './auth-form.module.css';
 import apiLogin from '../../pages/api/apiLogin';
 import Layout from "../layout/layout";
@@ -27,9 +27,9 @@ function AuthForm() {
     if (isLogin) {
       apiLogin.userLogin(enteredUsername, enteredPassword)
         .then(result => {
-          let token = result.headers['authorization'] // TODO: Save in gloabl variable
-          console.log("Token en login " + token)
-          localStorage.setItem("token",token);
+          let bearer = result.headers['authorization'] // TODO: Save in gloabl variable
+          console.log("Token en login " + bearer)
+          localStorage.setItem("token",bearer);
           router.replace(`/Admin/HomeAdmin/${result.data.username}`)
         })
         .catch(err => {
