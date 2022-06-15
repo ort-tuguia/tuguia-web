@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
-import { getAllEvents } from "../../../dummy-data";
 import UserList from '../../../components/events/UserList';
 import { getUsuarios } from '../../api/apiUsuarios';
-import { getActivities } from '../../api/apiActivities'
 import { getAllUsers } from '../../../dummy-users'
 import apiActivities from '../../api/apiActivities';
+import LayoutAdmin from "../../../components/layout/layout-admin";
+
 
 function HomeAdminId() {
 
@@ -26,11 +26,12 @@ function HomeAdminId() {
 
 
     return (
-
+        <LayoutAdmin>
         <div>
             Hola ID {guiaId}
             <UserList items={usuario} />
         </div>
+        </LayoutAdmin>
     )
 }
 
