@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import classes from './auth-form.module.css';
 import apiLogin from '../../pages/api/apiLogin';
+import Layout from "../layout/layout";
 
 function AuthForm() {
   const usernameInputRef = useRef();
@@ -27,7 +28,8 @@ function AuthForm() {
       apiLogin.userLogin(enteredUsername, enteredPassword)
         .then(result => {
           let token = result.headers['authorization'] // TODO: Save in gloabl variable
-          router.replace(`/Guia/HomeGuia/${result.data.username}`)
+          localStorage.setItem("token",token);
+          router.replace(`/Admin/HomeAdmin/${result.data.username}`)
         })
         .catch(err => {
           console.error(err)
@@ -43,6 +45,7 @@ function AuthForm() {
   }
 
   return (
+      <Layout>
     <section className={classes.auth}>
       {/* <h1>{isLogin ? 'Login' : 'Sign Up'}</h1> */}
       <form onSubmit={submitHandler}>
@@ -64,6 +67,7 @@ function AuthForm() {
         </div>
       </form>
     </section>
+      </Layout>
   );
 }
 
