@@ -5,7 +5,7 @@ import AdminHeader from "./admin-header";
 function Layout(props) {
   return (
     <Fragment>
-      <AdminHeader/>
+      <MainHeader/>
       <main>{props.children}</main>
     </Fragment>
   );
