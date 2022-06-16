@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import apiUsuarios from "../../api/apiUsuarios";
 import bearer from "../../../components/context/contextLogin";
 
+
+
 function HomeAdminId() {
     const[users,setUsers]= useState([])
     useEffect(  () => {
@@ -19,8 +21,20 @@ function HomeAdminId() {
          })
 
     },[])
-
-
+    function DeleteUser(username) {
+        apiUsuarios.deleteUsuarios(username, bearer).then(function (response) {
+            console.log("Token en HomeAdmin dentro de response " + bearer)
+            apiUsuarios.getUsuarios(bearer).then(function (response) {
+                setUsers(response.data)
+                console.log("Token en HomeAdmin dentro de response " + bearer)
+            }).catch(err =>{
+                console.log("Token en HomeAdmin dentro de response error " + bearer)
+                console.error(err)
+            })
+        }   ).catch(err =>{
+            console.log("Token en HomeAdmin dentro de response error " + bearer)
+            console.error(err)})
+        }
     const router = useRouter();
     // const guiaId = router.query.id
 
@@ -54,7 +68,10 @@ function HomeAdminId() {
                             Correo
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            <span class="sr-only">Edit</span>
+                            <span class="sr-only">Cambiar Contraseña</span>
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            <span class="sr-only">Eliminar</span>
                         </th>
                     </tr>
                     </thead>
@@ -76,7 +93,17 @@ function HomeAdminId() {
                         </td>
                         <td className="px-6 py-4 text-right">
                             <a href="#"
-                               className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                               className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Cambiar contraseña</a>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                            <button type="button" onClick={() => DeleteUser(user.username)}
+                                    className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                Eliminar
+                            </button>
+                            {/*<a href={*/}
+                            {/*    DeleteUser(user.username)*/}
+                            {/*}*/}
+                            {/*   className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</a>*/}
                         </td>
                     </tr>
                     ))}
