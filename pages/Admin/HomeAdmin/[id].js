@@ -5,23 +5,18 @@ import apiUsuarios from "../../api/apiUsuarios";
 import bearer from "../../../components/context/contextLogin";
 
 function HomeAdminId() {
-    const[users,setUsers]= useState()
-    useEffect(()=>{
-         bearer = localStorage.getItem("token")
+    const[users,setUsers]= useState([])
+    useEffect(  () => {
+        bearer = localStorage.getItem("token")
         //setToken(localStorage.getItem("bearer"))
         console.log("Token en HomeAdmin " + bearer)
-        apiUsuarios.getUsuarios(bearer).then(result=>{
-            console.log( "Result "+ result)
-                console.log("Result Data " + result.data)
-            let response = result.data
-            setUsers(response)
-                console.log("Token en HomeAdmin dentro de response " + bearer)
-            console.log ("Users " + users)
-        }
-        ).catch(err =>{
-            console.log("Token en HomeAdmin dentro de response error " + bearer)
-            console.error(err)
-        })
+        apiUsuarios.getUsuarios(bearer).then(function (response) {
+            setUsers(response.data)
+            console.log("Token en HomeAdmin dentro de response " + bearer)
+        }).catch(err =>{
+             console.log("Token en HomeAdmin dentro de response error " + bearer)
+             console.error(err)
+         })
 
     },[])
 
@@ -38,22 +33,25 @@ function HomeAdminId() {
 
     return (
         <LayoutAdmin>
-
+            {/*TODO PARA VER CODIGO FUNCIONANDO*/}
+            {/*<pre>*/}
+            {/*    {JSON.stringify(users, null, 2)}*/}
+            {/*</pre>*/}
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
-                            Product name
+                            Usuario
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Color
+                            Nombre
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Category
+                            Apellido
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Price
+                            Correo
                         </th>
                         <th scope="col" className="px-6 py-3">
                             <span class="sr-only">Edit</span>
@@ -61,63 +59,27 @@ function HomeAdminId() {
                     </tr>
                     </thead>
                     <tbody>
+                    {users.map(user => (
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row"
                             className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            Apple MacBook Pro 17"
+                            {user.username}
                         </th>
                         <td className="px-6 py-4">
-                            Sliver
+                            {user.firstName}
                         </td>
                         <td className="px-6 py-4">
-                            Laptop
+                            {user.lastName}
                         </td>
                         <td className="px-6 py-4">
-                            $2999
+                            {user.email}
                         </td>
                         <td className="px-6 py-4 text-right">
                             <a href="#"
                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            Microsoft Surface Pro
-                        </th>
-                        <td className="px-6 py-4">
-                            White
-                        </td>
-                        <td className="px-6 py-4">
-                            Laptop PC
-                        </td>
-                        <td className="px-6 py-4">
-                            $1999
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                            <a href="#"
-                               className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                    <tr class="bg-white dark:bg-gray-800">
-                        <th scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            Magic Mouse 2
-                        </th>
-                        <td className="px-6 py-4">
-                            Black
-                        </td>
-                        <td className="px-6 py-4">
-                            Accessories
-                        </td>
-                        <td className="px-6 py-4">
-                            $99
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                            <a href="#"
-                               className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>
