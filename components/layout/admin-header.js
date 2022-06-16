@@ -32,13 +32,7 @@ function AdminHeader() {
                 </div>
                 <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                     <div className="text-sm lg:flex-grow">
-                        <a
-                            href="/Actividades/HomeActividades"
-                            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-                        >
-                            Actividades
-                        </a>
-                        <a
+                             <a
                             href="/Categorias/HomeCategorias"
                             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
                         >
@@ -49,12 +43,6 @@ function AdminHeader() {
                             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
                         >
                             Usuarios
-                        </a>
-                        <a
-                            href="/Reviews/HomeReviews"
-                            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-                        >
-                             Reseñas
                         </a>
                     </div>
                     <div>
