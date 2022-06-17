@@ -13,7 +13,7 @@ function MainHeader() {
             xmlns="http://www.w3.org/2000/svg"
           >
            </svg>
-          <span className="font-semibold text-xl tracking-tight">TuGuia Turistas</span>
+          <span className="font-semibold text-xl tracking-tight">TuGuia</span>
         </div>
         <div className="block lg:hidden">
           <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">

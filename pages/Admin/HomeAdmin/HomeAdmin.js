@@ -7,7 +7,7 @@ import bearer from "../../../components/context/contextLogin";
 
 
 
-function HomeAdminId() {
+function HomeAdmin() {
     const[users,setUsers]= useState([])
     const router = useRouter();
     useEffect(  () => {
@@ -109,4 +109,4 @@ function HomeAdminId() {
     )
 }
 
-export default HomeAdminId
+export default HomeAdmin
