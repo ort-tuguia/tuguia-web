@@ -2,10 +2,11 @@ import React, {createElement, useEffect, useState} from "react";
 import bearer from "../../components/context/contextLogin";
 import apiCategories from "../api/apiCategories";
 import LayoutAdmin from "../../components/layout/layout-admin";
+import {useRouter} from "next/router";
 
 function HomeCategorias(){
     const [categories,setCategories] = useState([]);
-
+    const router = useRouter();
     useEffect(()=>{
         bearer = localStorage.getItem("token")
         console.log("Token en HomeCategorias " + bearer)
@@ -19,35 +20,35 @@ function HomeCategorias(){
     function CrearLaCat(name,description) {
         bearer = localStorage.getItem("token")
 
-        console.log("Nombre de la categoria: " + name)
-        console.log("Descripcion de la categoria: " + description)
-        apiCategories.createCategory(name,description,bearer).then(function (resp) {
-            console.log("Response PUT "+resp)
-            apiCategories.getCategories(bearer).then(function (response) {
-                console.log("Response GET "+response)
-                setCategories(response.data)
-            }).catch(err =>{
-                console.error(err)
-            })
+         apiCategories.createCategory(name,description,bearer).then(function (resp) {
+                router.reload()
         }).catch(err =>{
             console.error(err)
         })
     }
     function DeleteCategory(id) {
         apiCategories.deleteCategory(id, bearer).then(function (response) {
-            console.log("Token en HomeCategorias dentro de response " + bearer)
-            apiCategories.getCategories(bearer).then(function (response) {
-                setCategories(response.data)
-                console.log("Token en HomeCategorias dentro de response " + bearer)
-            }).catch(err =>{
-                console.log("Token en HomeCategorias dentro de response error " + bearer)
-                console.error(err)
-            })
+            router.reload()
         }   ).catch(err =>{
             console.log("Token en HomeAdmin dentro de response error " + bearer)
             console.error(err)})
 
     }
+
+    // function ModificarCategoria(id, name, description) {
+    //     bearer = localStorage.getItem("token")
+    //     apiCategories.updateCategory(id,name,description,bearer).then(function (resp) {
+    //         apiCategories.getCategories(bearer).then(function (response) {
+    //             console.log("Response GET "+response)
+    //             setCategories(response.data)
+    //         }).catch(err =>{
+    //             console.error(err)
+    //         })
+    //     }).catch(err =>{
+    //         console.error(err)
+    //     })
+    // }
+
     return(
         <LayoutAdmin>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -117,26 +118,6 @@ function HomeCategorias(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -165,7 +146,10 @@ function HomeCategorias(){
                                 {category.description}
                             </td>
                             <td className="px-6 py-4 text-right">
-                                <button type="button" onClick={() =>console.log("Modificar")}
+                                <button type="button" onClick={() =>
+                                    router.push( {pathname:`/Categorias/UpdateCategory/`,query:{id:category.id,name:category.name,description:category.description}})
+                                    //ModificarCategoria(category.id,category.name,category.description)
+                                    }
                                         className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
                                     Modificar
                                 </button>
