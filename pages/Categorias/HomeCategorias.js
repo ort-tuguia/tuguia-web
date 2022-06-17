@@ -3,26 +3,61 @@ import bearer from "../../components/context/contextLogin";
 import apiCategories from "../api/apiCategories";
 import LayoutAdmin from "../../components/layout/layout-admin";
 import {useRouter} from "next/router";
+import { Modal, Label, TextInput, Checkbox, Button  } from "flowbite-react";
+import StaticContent from "../../components/StaticContent";
+import {HiOutlineExclamationCircle} from "react-icons/hi";
+import UpdateCategory from "./UpdateCategory";
 
 function HomeCategorias(){
     const [categories,setCategories] = useState([]);
+    const [showModal,setShowModal] = useState(false);
+    const [showDeleteModal,setShowDeleteModal] = useState(false);
+    const [deleteCategoryId,setDeleteCategoryId] = useState(0);
+    const [name,setName] = useState("");
+    const [description,setDescription] = useState("");
+    const [updateCategoryData,setUpdateCategoryData] = useState({});
+    const [showUpdateCategory,setShowUpdateCategory] = useState(false);
+
     const router = useRouter();
-    useEffect(()=>{
-        bearer = localStorage.getItem("token")
-        console.log("Token en HomeCategorias " + bearer)
-        apiCategories.getCategories(bearer).then(function (response) {
-            setCategories(response.data)
-        }).catch(err =>{
+
+    const loadData = async () => {
+        const bearer = localStorage.getItem("token");
+        try {
+            const response = await apiCategories.getCategories(bearer);
+            setCategories(response.data);
+        } catch (err) {
             window.confirm(err.response.data.message)
             console.error(err)
-        })
+        }
 
-    },[])
-    function CrearLaCat(name,description) {
+    };
+
+    useEffect(()=>{
+        loadData();
+    },[]);
+
+    useEffect(()=> {
+        setName("");
+        setDescription("");
+    }, [showModal]);
+
+    const updateCategory = async (id, name, description) => {
+        const bearer = localStorage.getItem("token");
+        try {
+            await apiCategories.updateCategory(id, name, description, bearer);
+            setShowUpdateCategory(false);
+            loadData();
+        } catch (err) {
+            window.confirm(err.response.data.message);
+            console.error(err);
+        }
+    }
+
+    function CrearLaCat() {
         bearer = localStorage.getItem("token")
-
-         apiCategories.createCategory(name,description,bearer).then(function (resp) {
-                router.reload()
+        apiCategories.createCategory(name,description,bearer).then(function (resp) {
+                //router.reload()
+             loadData();
         }).catch(err =>{
              window.confirm(err.response.data.message)
             console.error(err)
@@ -30,7 +65,7 @@ function HomeCategorias(){
     }
     function DeleteCategory(id) {
         apiCategories.deleteCategory(id, bearer).then(function (response) {
-            router.reload()
+            loadData();
         }   ).catch(err =>{
             console.log("Token en HomeAdmin dentro de response error " + bearer)
             window.confirm(err.response.data.message)
@@ -48,31 +83,54 @@ function HomeCategorias(){
                                     font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button"
                         onClick={()=>{
-                            document.getElementById("authentication-modal").style.display = "block";
+                            setShowModal(true);
                         }}
                         >
                         Agregar categoria
                     </button>
                 </div>
-                <div id="authentication-modal" tabIndex="-1" aria-hidden="true"
-                     className="hidden overflow-y-auto overflow-x-hidden fixed top-1 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <button type="button"
-                                    className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                    data-modal-toggle="authentication-modal"
-                                    onClick={()=>{
-                                        console.log("Click en boton")
-                                        document.getElementById("authentication-modal").style.display = "none";
-                                    }}>
-                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd"
-                                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                          clipRule="evenodd"></path>
-                                </svg>
-
-                            </button>
+                <StaticContent>
+                    <Modal
+                        show={showDeleteModal}
+                        size="md"
+                        popup={true}
+                        onClose={()=>{setShowDeleteModal(false)}}
+                    >
+                        <Modal.Header />
+                        <Modal.Body>
+                            <div className="text-center">
+                                <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    Estas seguro que quiere borrar la categoria {categories.find(t => t.id == deleteCategoryId)?.name}?
+                                </h3>
+                                <div className="flex justify-center gap-4">
+                                    <Button
+                                        color="failure"
+                                        onClick={()=>{
+                                            DeleteCategory(deleteCategoryId)
+                                            setShowDeleteModal(false);
+                                        }}
+                                    >
+                                        Aceptar
+                                    </Button>
+                                    <Button
+                                        color="gray"
+                                        onClick={()=>{setShowDeleteModal(false)}}
+                                    >
+                                        Cancelar
+                                    </Button>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                    </Modal>
+                    <Modal
+                        show={showModal}
+                        size="md"
+                        popup={true}
+                        onClose={()=>{ setShowModal(false) }}
+                    >
+                        <Modal.Header />
+                        <Modal.Body>
                             <div className="py-6 px-6 lg:px-8">
                                 <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Crear nueva categoria</h3>
                                 <form className="space-y-6" action="#">
@@ -81,28 +139,30 @@ function HomeCategorias(){
                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre de la categoria</label>
                                         <input type="text" name="name" id="name"
                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                               placeholder="Ingrese nombre de la categoria" required/>
+                                               placeholder="Ingrese nombre de la categoria" required
+                                               value={name} onChange={(e)=>{setName(e.target.value)}}
+                                        />
                                     </div>
                                     <div>
                                         <label htmlFor="description"
                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Descripcion de la categoria</label>
                                         <input type="text" name="description" id="description" placeholder="Ingrese descripcion de la categoria"
+                                               value={description} onChange={(e)=>{setDescription(e.target.value)}}
                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                required/>
                                     </div>
                                     <button type="button" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                    onClick={()=>{
-                                         var nameCategory = document.getElementById("name").value
-                                        var descriptionCategory = document.getElementById("description").value
-                                        CrearLaCat(nameCategory,descriptionCategory)
-                                        document.getElementById("authentication-modal").style.display = "none";
-                                    }}
+                                            onClick={()=>{
+                                                CrearLaCat()
+                                                setShowModal(false);
+                                            }}
                                     >Crear categoria</button>
                                 </form>
                             </div>
-                    </div>
-                </div>
-            </div>
+                        </Modal.Body>
+                    </Modal>
+                </StaticContent>
+                <UpdateCategory showModal={showUpdateCategory} category={updateCategoryData} onSave={updateCategory} onClose={() => setShowUpdateCategory(false)} />
             </div>
 
 
@@ -136,19 +196,20 @@ function HomeCategorias(){
                                 {category.description}
                             </td>
                             <td className="px-6 py-4 text-right">
-                                <button type="button" onClick={() =>
-                                    router.push( {pathname:`/Categorias/UpdateCategory/`,query:{id:category.id,name:category.name,description:category.description}})
+                                <button type="button" onClick={() => {
+                                    //router.push( {pathname:`/Categorias/UpdateCategory/`,query:{id:category.id,name:category.name,description:category.description}})
                                     //ModificarCategoria(category.id,category.name,category.description)
-                                    }
+                                    setUpdateCategoryData(category);
+                                    setShowUpdateCategory(true);
+                                }}
                                         className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
                                     Modificar
                                 </button>
                             </td>
                             <td className="px-6 py-4 text-right">
                                 <button type="button" onClick={function (){
-                                    if (window.confirm(`¿Estas seguro de eliminar el usuario : ${category.name}?`)) {
-                                        DeleteCategory(category.id)
-                                    }
+                                    setDeleteCategoryId(category.id);
+                                    setShowDeleteModal(true);
                                 }}
                                         className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
                                     Eliminar

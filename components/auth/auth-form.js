@@ -40,8 +40,8 @@ function AuthForm() {
 
   return (
       <Layout>
-          <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div className="h-full md:h-auto flex flex-1 p-4 content-center justify-center">
+            <div className="bg-white rounded-lg shadow dark:bg-gray-700 flex-1 max-w-md">
               <div className="py-6 px-6 lg:px-8">
                 <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Iniciar sesion</h3>
                 <form className="space-y-6" action="#" onSubmit={submitHandler}>
