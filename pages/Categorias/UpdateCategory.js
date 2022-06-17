@@ -21,6 +21,7 @@ function UpdateCategory(props) {
         apiCategories.updateCategory(id,name,description,bearer).then(function (resp) {
               router.replace("/Categorias/HomeCategorias")
         }).catch(err =>{
+            window.confirm(err.response.data.message)
             console.error(err)
         })
     }

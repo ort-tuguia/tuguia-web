@@ -13,6 +13,7 @@ function HomeCategorias(){
         apiCategories.getCategories(bearer).then(function (response) {
             setCategories(response.data)
         }).catch(err =>{
+            window.confirm(err.response.data.message)
             console.error(err)
         })
 
@@ -23,6 +24,7 @@ function HomeCategorias(){
          apiCategories.createCategory(name,description,bearer).then(function (resp) {
                 router.reload()
         }).catch(err =>{
+             window.confirm(err.response.data.message)
             console.error(err)
         })
     }
@@ -31,23 +33,11 @@ function HomeCategorias(){
             router.reload()
         }   ).catch(err =>{
             console.log("Token en HomeAdmin dentro de response error " + bearer)
+            window.confirm(err.response.data.message)
             console.error(err)})
 
     }
 
-    // function ModificarCategoria(id, name, description) {
-    //     bearer = localStorage.getItem("token")
-    //     apiCategories.updateCategory(id,name,description,bearer).then(function (resp) {
-    //         apiCategories.getCategories(bearer).then(function (response) {
-    //             console.log("Response GET "+response)
-    //             setCategories(response.data)
-    //         }).catch(err =>{
-    //             console.error(err)
-    //         })
-    //     }).catch(err =>{
-    //         console.error(err)
-    //     })
-    // }
 
     return(
         <LayoutAdmin>
