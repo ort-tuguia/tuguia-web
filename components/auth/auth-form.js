@@ -9,21 +9,30 @@ function AuthForm() {
   const usernameInputRef = useRef();
   const enteredPasswordRef = useRef();
   const router = useRouter();
+    const [user,setUser] = useState()
 
   async function submitHandler(event) {
     event.preventDefault();
+
 
     const enteredUsername = usernameInputRef.current.value;
     const enteredPassword = enteredPasswordRef.current.value;
 
       apiLogin.userLogin(enteredUsername, enteredPassword)
           .then(result => {
-            let bearer = result.headers['authorization']
-            console.log("Token en login " + bearer)
-            localStorage.setItem("token", bearer);
-            router.replace(`/Admin/HomeAdmin/HomeAdmin`)
+              if(result.data.role === "ADMIN"){
+                  let bearer = result.headers['authorization']
+                  console.log("Token en login " + bearer)
+
+                  localStorage.setItem("token", bearer);
+                  router.replace(`/Admin/HomeAdmin/HomeAdmin`)
+              }else{
+                  console.log("ERRORR")
+                  window.confirm("Usuario no autorizado")
+              }
           })
           .catch(err => {
+              window.confirm(err.response.data.message)
             console.error(err)
           })
 
