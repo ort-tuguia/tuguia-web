@@ -9,6 +9,7 @@ import bearer from "../../../components/context/contextLogin";
 
 function HomeAdminId() {
     const[users,setUsers]= useState([])
+    const router = useRouter();
     useEffect(  () => {
         bearer = localStorage.getItem("token")
         console.log("Token en HomeAdmin " + bearer)
@@ -23,22 +24,14 @@ function HomeAdminId() {
     },[])
     function DeleteUser(username) {
         apiUsuarios.deleteUsuarios(username, bearer).then(function (response) {
-            console.log("Token en HomeAdmin dentro de response " + bearer)
-            apiUsuarios.getUsuarios(bearer).then(function (response) {
-                setUsers(response.data)
-                console.log("Token en HomeAdmin dentro de response " + bearer)
-            }).catch(err =>{
-                console.log("Token en HomeAdmin dentro de response error " + bearer)
-                console.error(err)
-            })
-
+            router.reload()
         }   ).catch(err =>{
             console.log("Token en HomeAdmin dentro de response error " + bearer)
             console.error(err)})
         }
 
 
-    const router = useRouter();
+
 
     return (
         <LayoutAdmin>
