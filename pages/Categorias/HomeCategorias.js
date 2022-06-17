@@ -2,10 +2,11 @@ import React, {createElement, useEffect, useState} from "react";
 import bearer from "../../components/context/contextLogin";
 import apiCategories from "../api/apiCategories";
 import LayoutAdmin from "../../components/layout/layout-admin";
+import {useRouter} from "next/router";
 
 function HomeCategorias(){
     const [categories,setCategories] = useState([]);
-
+    const router = useRouter();
     useEffect(()=>{
         bearer = localStorage.getItem("token")
         console.log("Token en HomeCategorias " + bearer)
@@ -19,35 +20,35 @@ function HomeCategorias(){
     function CrearLaCat(name,description) {
         bearer = localStorage.getItem("token")
 
-        console.log("Nombre de la categoria: " + name)
-        console.log("Descripcion de la categoria: " + description)
-        apiCategories.createCategory(name,description,bearer).then(function (resp) {
-            console.log("Response PUT "+resp)
-            apiCategories.getCategories(bearer).then(function (response) {
-                console.log("Response GET "+response)
-                setCategories(response.data)
-            }).catch(err =>{
-                console.error(err)
-            })
+         apiCategories.createCategory(name,description,bearer).then(function (resp) {
+                router.reload()
         }).catch(err =>{
             console.error(err)
         })
     }
     function DeleteCategory(id) {
         apiCategories.deleteCategory(id, bearer).then(function (response) {
-            console.log("Token en HomeCategorias dentro de response " + bearer)
-            apiCategories.getCategories(bearer).then(function (response) {
-                setCategories(response.data)
-                console.log("Token en HomeCategorias dentro de response " + bearer)
-            }).catch(err =>{
-                console.log("Token en HomeCategorias dentro de response error " + bearer)
-                console.error(err)
-            })
+            router.reload()
         }   ).catch(err =>{
             console.log("Token en HomeAdmin dentro de response error " + bearer)
             console.error(err)})
 
     }
+
+    // function ModificarCategoria(id, name, description) {
+    //     bearer = localStorage.getItem("token")
+    //     apiCategories.updateCategory(id,name,description,bearer).then(function (resp) {
+    //         apiCategories.getCategories(bearer).then(function (response) {
+    //             console.log("Response GET "+response)
+    //             setCategories(response.data)
+    //         }).catch(err =>{
+    //             console.error(err)
+    //         })
+    //     }).catch(err =>{
+    //         console.error(err)
+    //     })
+    // }
+
     return(
         <LayoutAdmin>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -99,12 +100,12 @@ function HomeCategorias(){
                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                required/>
                                     </div>
-                                    <button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    <button type="button" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     onClick={()=>{
                                          var nameCategory = document.getElementById("name").value
                                         var descriptionCategory = document.getElementById("description").value
-
                                         CrearLaCat(nameCategory,descriptionCategory)
+                                        document.getElementById("authentication-modal").style.display = "none";
                                     }}
                                     >Crear categoria</button>
                                 </form>
@@ -113,26 +114,6 @@ function HomeCategorias(){
                 </div>
             </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -165,7 +146,10 @@ function HomeCategorias(){
                                 {category.description}
                             </td>
                             <td className="px-6 py-4 text-right">
-                                <button type="button" onClick={() =>console.log("Modificar")}
+                                <button type="button" onClick={() =>
+                                    router.push( {pathname:`/Categorias/UpdateCategory/`,query:{id:category.id,name:category.name,description:category.description}})
+                                    //ModificarCategoria(category.id,category.name,category.description)
+                                    }
                                         className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
                                     Modificar
                                 </button>
