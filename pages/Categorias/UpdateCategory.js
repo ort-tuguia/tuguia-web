@@ -11,9 +11,9 @@ function UpdateCategory(props) {
     const[description, setDescription] = useState();
     useEffect(() => {
         bearer = localStorage.getItem("token")
-    setId(router.query.id);
-    setName(router.query.name);
-    setDescription(router.query.description);
+        setId(router.query.id);
+        setName(router.query.name);
+        setDescription(router.query.description);
     },[])
 
     function ModificarCategoria(id, name, description) {
@@ -27,8 +27,8 @@ function UpdateCategory(props) {
     }
     return(
         <LayoutAdmin>
-            <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div className="p-4 w-full h-full md:h-auto flex content-center justify-center">
+                <div className="bg-white rounded-lg shadow dark:bg-gray-700 flex-1 max-w-md">
                     <div className="py-6 px-6 lg:px-8">
                         <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Modificar categoria</h3>
             <form className="space-y-6">
