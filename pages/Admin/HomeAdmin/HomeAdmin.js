@@ -6,12 +6,18 @@ import bearer from "../../../components/context/contextLogin";
 import {Button, Modal} from "flowbite-react";
 import {HiOutlineExclamationCircle} from "react-icons/hi";
 import StaticContent from "../../../components/StaticContent";
+import ChangePassword from "./ChangePassword";
 
 function HomeAdmin() {
     const[users,setUsers]= useState([])
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteUsername, setDeleteUsername] = useState("");
     const router = useRouter();
+    const [showChangePassword, setShowChangePassword] = useState(false);
+    const[updateUserPassword, setUpdateUserPassword] = useState("");
+    const[updateUserConfirmPassword, setUpdateUserConfirmPassword] = useState("");
+    const [updateUserData, setUpdateUserData] = useState("");
+
 
     const loadData = async () => {
         try {
@@ -34,16 +40,26 @@ function HomeAdmin() {
             console.log("Token en HomeAdmin dentro de response error " + bearer)
             console.error(err)})
         }
+    const updatePassword = async (username, password, confirmPassword) => {
+        const bearer = localStorage.getItem("token");
+        try{
+            console.log( `${username} , ${password} , ${confirmPassword}`)
+            //TODO ACA VA EL ENDPOINT PARA CAMBIAR CONTRASEÑA
+            //await apiUsuarios.updatePassword(username, password, confirmPassword, bearer);
+            setShowChangePassword(false);
+            loadData();
+        }catch (err) {
+            window.confirm(err.response.data.message)
+            console.error(err)
+        }
+
+    }
 
 
 
 
     return (
         <LayoutAdmin>
-            {/*TODO PARA VER CODIGO FUNCIONANDO*/}
-            {/*<pre>*/}
-            {/*    {JSON.stringify(users, null, 2)}*/}
-            {/*</pre>*/}
             <StaticContent>
                 <Modal
                     show={showDeleteModal}
@@ -120,7 +136,10 @@ function HomeAdmin() {
                             {user.email}
                         </td>
                         <td className="px-6 py-4 text-right">
-                            <button type="button" onClick={() =>console.log("Modificar clave")}
+                            <button type="button" onClick={() =>{
+                                setUpdateUserData(user.username);
+                                setShowChangePassword(true);
+                            }}
                                     className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
                                 Cambiar Contraseña
                             </button>
@@ -139,7 +158,7 @@ function HomeAdmin() {
                     </tbody>
                 </table>
             </div>
-
+        <ChangePassword showModal ={showChangePassword} username = {updateUserData} password = {updateUserPassword} confirmPassword = {updateUserConfirmPassword} onChangePassword ={updatePassword} onClose = {()=> setShowChangePassword(false)} />
         </LayoutAdmin>
     )
 }
