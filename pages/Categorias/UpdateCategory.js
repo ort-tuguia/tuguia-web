@@ -16,20 +16,20 @@ function UpdateCategory(props) {
         console.log(props.category);
     },[])
 
-    React.useEffect(() => {
+    useEffect(() => {
         setName(props.category.name);
         setDescription(props.category.description);
     }, [props.category])
 
-    function ModificarCategoria(id, name, description) {
-        bearer = localStorage.getItem("token")
-        apiCategories.updateCategory(id,name,description,bearer).then(function (resp) {
-              router.replace("/Categorias/HomeCategorias")
-        }).catch(err =>{
-            window.confirm(err.response.data.message)
-            console.error(err)
-        })
-    }
+    // function ModificarCategoria(id, name, description) {
+    //     bearer = localStorage.getItem("token")
+    //     apiCategories.updateCategory(id,name,description,bearer).then(function (resp) {
+    //           router.replace("/Categorias/HomeCategorias")
+    //     }).catch(err =>{
+    //         window.confirm(err.response.data.message)
+    //         console.error(err)
+    //     })
+    // }
 
     return(
     <StaticContent>
