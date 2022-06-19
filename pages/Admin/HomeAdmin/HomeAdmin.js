@@ -3,8 +3,8 @@ import LayoutAdmin from "../../../components/layout/layout-admin";
 import React, {useEffect, useState} from "react";
 import apiUsuarios from "../../api/apiUsuarios";
 import bearer from "../../../components/context/contextLogin";
-import {Button, Modal} from "flowbite-react";
-import {HiOutlineExclamationCircle} from "react-icons/hi";
+import {Button, Modal, Toast} from "flowbite-react";
+import {HiOutlineExclamationCircle, HiCheck} from "react-icons/hi";
 import StaticContent from "../../../components/StaticContent";
 import ChangePassword from "./ChangePassword";
 
@@ -45,8 +45,9 @@ function HomeAdmin() {
         try{
             console.log( `${username} , ${password} , ${confirmPassword}`)
             //TODO ACA VA EL ENDPOINT PARA CAMBIAR CONTRASEÑA
-            //await apiUsuarios.updatePassword(username, password, confirmPassword, bearer);
+            await apiUsuarios.updatePassword(username, password, confirmPassword, bearer);
             setShowChangePassword(false);
+
             loadData();
         }catch (err) {
             window.confirm(err.response.data.message)
@@ -61,6 +62,7 @@ function HomeAdmin() {
     return (
         <LayoutAdmin>
             <StaticContent>
+
                 <Modal
                     show={showDeleteModal}
                     size="md"
@@ -159,7 +161,19 @@ function HomeAdmin() {
                 </table>
             </div>
         <ChangePassword showModal ={showChangePassword} username = {updateUserData} password = {updateUserPassword} confirmPassword = {updateUserConfirmPassword} onChangePassword ={updatePassword} onClose = {()=> setShowChangePassword(false)} />
+            {/*<div className="top-0 right-0 left-0 z-50 h-modal overflow-y-auto overflow-x-hidden md:inset-0 md:h-full items-end justify-end flex ">*/}
+            {/*    <Toast>*/}
+            {/*        <div className="inline-flex h-8 w-8 shrink-0 items-cent justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">*/}
+            {/*            <HiCheck className="h-5 w-5" />*/}
+            {/*        </div>*/}
+            {/*        <div className="ml-3 text-sm font-normal">*/}
+            {/*            Contraseña cambiada correctamente {updateUserData}*/}
+            {/*        </div>*/}
+            {/*        <Toast.Toggle />*/}
+            {/*    </Toast>*/}
+            {/*</div>*/}
         </LayoutAdmin>
+
     )
 }
 
