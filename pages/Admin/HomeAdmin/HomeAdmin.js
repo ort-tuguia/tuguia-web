@@ -70,11 +70,11 @@ function HomeAdmin() {
                     }}
                 >
                     <Modal.Header/>
-                    <Modal.Body>
+                    <Modal.Body  >
                         <div className="text-center">
                             <HiOutlineExclamationCircle
-                                className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200"/>
-                            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                className="mx-auto mb-4 h-14 w-14 text-gray-900 dark:text-gray-50 "/>
+                            <h3 className="mb-5 text-lg font-normal text-gray-900 dark:text-gray-50">
                                 Estas seguro que quiere borrar el usuario {deleteUsername}?
                             </h3>
                             <div className="flex justify-center gap-4">
@@ -101,8 +101,8 @@ function HomeAdmin() {
                 </Modal>
             </StaticContent>
             <div class="relative overflow-x-auto shadow-md">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left text-gray-500 text-gray-200">
+                    <thead class="text-xs text-gray-50 uppercase bg-gray-50 bg-gray-700 text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
                             Usuario
@@ -126,9 +126,9 @@ function HomeAdmin() {
                     </thead>
                     <tbody>
                     {users.map(user => (
-                        <tr key={user.username} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr key={user.username} class=" border-b bg-gray-800 border-gray-700">
                             <th scope="row"
-                                className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                className="px-6 py-4 font-medium text-white whitespace-nowrap">
                                 {user.username}
                             </th>
                             <td className="px-6 py-4">
@@ -145,7 +145,7 @@ function HomeAdmin() {
                                     setUpdateUserData(user.username);
                                     setShowChangePassword(true);
                                 }}
-                                        className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
+                                        className="text-gray-400 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 border-gray-600 text-gray-400 hover:text-white hover:bg-gray-600 focus:ring-gray-800">
                                     Cambiar Contraseña
                                 </button>
                             </td>
@@ -154,7 +154,7 @@ function HomeAdmin() {
                                     setDeleteUsername(user.username);
                                     setShowDeleteModal(true);
                                 }}
-                                        className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                        className=" hover:text-white border focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 border-red-600 text-red-500 hover:text-white hover:bg-red-700 focus:ring-red-600">
                                     Eliminar
                                 </button>
                             </td>
