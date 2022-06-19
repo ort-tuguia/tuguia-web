@@ -99,8 +99,8 @@ function HomeCategorias(){
                         <Modal.Header />
                         <Modal.Body>
                             <div className="text-center">
-                                <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-900 dark:text-gray-50 " />
+                                <h3 className="mb-5 text-lg font-normal text-gray-900 dark:text-gray-50">
                                     Estas seguro que quiere borrar la categoria {categories.find(t => t.id == deleteCategoryId)?.name}?
                                 </h3>
                                 <div className="flex justify-center gap-4">
@@ -168,8 +168,8 @@ function HomeCategorias(){
 
 
 
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left text-gray-400">
+                    <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
                             Nombre
@@ -187,9 +187,9 @@ function HomeCategorias(){
                     </thead>
                     <tbody>
                     {categories.map(category => (
-                        <tr key = {category.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr key = {category.id} class=" border-b bg-gray-800 border-gray-700">
                             <th scope="row"
-                                className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                className="px-6 py-4 font-medium text-white whitespace-nowrap">
                                 {category.name}
                             </th>
                             <td className="px-6 py-4">
@@ -197,12 +197,12 @@ function HomeCategorias(){
                             </td>
                             <td className="px-6 py-4 text-right">
                                 <button type="button" onClick={() => {
-                                    //router.push( {pathname:`/Categorias/UpdateCategory/`,query:{id:category.id,name:category.name,description:category.description}})
-                                    //ModificarCategoria(category.id,category.name,category.description)
                                     setUpdateCategoryData(category);
                                     setShowUpdateCategory(true);
                                 }}
-                                        className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
+                                        className="  border  focus:ring-4
+                                        focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5
+                                        text-center mr-2 mb-2 border-gray-600 text-gray-400 dark:hover:text-white hover:bg-gray-600 focus:ring-gray-800">
                                     Modificar
                                 </button>
                             </td>
@@ -211,7 +211,7 @@ function HomeCategorias(){
                                     setDeleteCategoryId(category.id);
                                     setShowDeleteModal(true);
                                 }}
-                                        className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                        className="hover:text-white border focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 border-red-600 text-red-500 hover:text-white hover:bg-red-700 focus:ring-red-600">
                                     Eliminar
                                 </button>
                             </td>
