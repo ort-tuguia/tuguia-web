@@ -22,5 +22,18 @@ export default {
             }
         })
         return response
+    },
+    async updatePassword(username, password, confirmPassword, token) {
+        let response = await apiConnection.put(`/users/${username}/password`, {
+            newPassword: password,
+            confirmNewPassword: confirmPassword
+        }, {
+            headers: {
+                Authorization: token ,
+                Accept: 'application/json',
+
+            }
+        })
     }
+
 }
