@@ -32,8 +32,15 @@ function AuthForm() {
               }
           })
           .catch(err => {
-              window.confirm(err.response.data.message)
-            console.error(err)
+
+              if(err.response.status == 404 || err.response.status == 400){
+                  window.confirm("El nombre de usuario o la contraseña no son correctos ")
+              }else{
+                    window.confirm("Error en el servidor")
+              }
+
+
+
           })
 
   }
