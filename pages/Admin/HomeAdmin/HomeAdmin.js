@@ -117,6 +117,9 @@ function HomeAdmin() {
                             Correo
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            Rol
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                             <span class="sr-only">Cambiar Contraseña</span>
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -140,6 +143,9 @@ function HomeAdmin() {
                             <td className="px-6 py-4">
                                 {user.email}
                             </td>
+                            <td className="px-6 py-4">
+                            {user.role}
+                        </td>
                             <td className="px-6 py-4 text-right">
                                 <button type="button" onClick={() => {
                                     setUpdateUserData(user.username);
