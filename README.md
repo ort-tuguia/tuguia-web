@@ -8,8 +8,8 @@ TuGuia Web Frontend
 
 ## Contents
 
+-   [Access](#access)
 -   [Getting Started](#getting-started)
--   [Documentation](#documentation)
 -   [Developed By](#developed-by)
 
 ## Access
