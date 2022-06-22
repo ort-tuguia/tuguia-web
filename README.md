@@ -10,6 +10,7 @@ TuGuia Web Frontend
 
 -   [Access](#access)
 -   [Getting Started](#getting-started)
+-   [Documentation](#documentation)
 
 ## Access
 
@@ -54,3 +55,9 @@ To learn more about Next.js, take a look at the following resources:
 -   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/)
+
+## Documentation
+
+### Manuals
+
+-   [Developer Manual](https://docs.google.com/document/d/11avoCSS9cVkUSJQ-y1uf5iqZlVy-1enZ)
