@@ -58,6 +58,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Documentation
 
-### Manuals
+### Manuals
 
 -   [Developer Manual](https://docs.google.com/document/d/11avoCSS9cVkUSJQ-y1uf5iqZlVy-1enZ)
